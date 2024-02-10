@@ -1,5 +1,5 @@
 import 'package:o2ease/constants/colors.dart';
-import 'package:o2ease/screens/login.dart';
+import 'package:o2ease/screens/auth_part/login.dart';
 import 'package:o2ease/widgets/button.dart';
 import 'package:o2ease/widgets/custom_input.dart';
 import 'package:flutter/cupertino.dart';
