@@ -1,5 +1,4 @@
 import 'package:o2ease/constants/colors.dart';
-import 'package:o2ease/screens/auth_part/getstarted.dart';
 import 'package:flutter/material.dart';
 import 'package:o2ease/screens/home_page.dart';
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1093294410083",
+    "project_id": "o2ease-2b590",
+    "storage_bucket": "o2ease-2b590.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1093294410083:android:5804cfd1edb4d147102b56",
+        "android_client_info": {
+          "package_name": "com.example.o2ease"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYQgRM1AjsxSNwntIuTlSZ4CaSzVR8AeM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
