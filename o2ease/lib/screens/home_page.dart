@@ -28,9 +28,9 @@ class _HomePageState extends State<HomePage> {
   double pm10 = 0;
   double nh3 = 0;
 
-  void fetchPollutionData() async {
+  Future<void> fetchPollutionData() async {
     var pollutionData = await http.get(Uri.parse(
-        "http://api.openweathermap.org/data/2.5/air_pollution?lat=19.0760&lon=72.8777&appid=382f89dd84b034e0754f256be4f5b0da"));
+        "http://api.openweathermap.org/data/2.5/air_pollution?lat=$lat&lon=$lng&appid=382f89dd84b034e0754f256be4f5b0da"));
     Map<String, dynamic> data = json.decode(pollutionData.body);
     print(data);
     List<dynamic> list = data['list'];

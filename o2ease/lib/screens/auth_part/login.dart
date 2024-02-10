@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:o2ease/constants/colors.dart';
 import 'package:o2ease/screens/auth_part/signup.dart';
+import 'package:o2ease/screens/home_page.dart';
 import 'package:o2ease/widgets/button.dart';
 import 'package:o2ease/widgets/custom_input.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,6 +18,30 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  final _firebase = FirebaseAuth.instance;
+
+
+void save() async {
+  String email = emailController.text;
+  String password = passwordController.text;
+
+  try {
+    await _firebase.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+  } on FirebaseAuthException catch (error) {
+    if (error.code == 'email-already-in-use') {
+      // Handle the case where the email is already in use
+    }
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(error.message ?? 'Authentication failed.'),
+      ),
+    );
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 20),
               CustomButton(
                 text: 'Log in',
-                onPressed: () {},
+                onPressed: (){Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx) => HomePage()));},
                 width: width,
               ),
               const SizedBox(height: 20),
