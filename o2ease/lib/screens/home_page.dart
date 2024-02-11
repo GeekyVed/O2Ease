@@ -18,15 +18,15 @@ class _HomePageState extends State<HomePage> {
   String lat = '';
   String lng = '';
   String apiid = "382f89dd84b034e0754f256be4f5b0da";
-  int aqi = 0;
-  double co = 0;
-  double no2 = 0;
-  double so2 = 0;
-  double no = 0;
-  double o3 = 0;
-  double pm2_5 = 0;
-  double pm10 = 0;
-  double nh3 = 0;
+  int aqi = 2;
+  double co = 467.3;
+  double no2 = 37.99;
+  double so2 = 8.23;
+  double no = 12.07;
+  double o3 = 65.09;
+  double pm2_5 = 16.93;
+  double pm10 = 23.96;
+  double nh3 = 1.62;
 
   Future<void> fetchPollutionData() async {
     var pollutionData = await http.get(Uri.parse(
@@ -58,24 +58,24 @@ class _HomePageState extends State<HomePage> {
       await Geolocator.requestPermission();
     } else {
       Timer.periodic(Duration(seconds: 30), (timer) {
-        _getlocationHelper();
+        _getLocationHelper();
       });
     }
   }
 
-  _getlocationHelper() async {
+  _getLocationHelper() async {
     Position currentPosition = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.bestForNavigation);
     setState(() {
       lat = currentPosition.latitude.toString();
       lng = currentPosition.longitude.toString();
+      // fetchPollutionData(); // Call fetchPollutionData after getting location
     });
   }
 
   @override
   void initState() {
     getLocationOfUser();
-    fetchPollutionData();
 
     super.initState();
   }
@@ -87,7 +87,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //Create a size variable for the mdeia query
+    //Create a size variable for the media query
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -124,17 +124,10 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Latitude : $lat , Longitude: $lng",
+              "Latitude : $lat  Longitude: $lng",
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 30.0,
-              ),
-            ),
-            Text(
-              "Date",
-              style: const TextStyle(
-                color: Colors.grey,
-                fontSize: 16.0,
               ),
             ),
             const SizedBox(
@@ -144,24 +137,43 @@ class _HomePageState extends State<HomePage> {
               width: size.width,
               height: 200,
               decoration: BoxDecoration(
-                  color: AppColors.primaryColor1,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.primaryColor1.withOpacity(.5),
-                      offset: const Offset(0, 25),
-                      blurRadius: 10,
-                      spreadRadius: -12,
-                    )
-                  ]),
+                color: AppColors.primaryColor1,
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.primaryColor1.withOpacity(.5),
+                    offset: const Offset(0, 25),
+                    blurRadius: 10,
+                    spreadRadius: -12,
+                  )
+                ],
+              ),
               child: Stack(
                 clipBehavior: Clip.none,
                 children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(
+                      10,
+                    ), // Adjust the radius as needed
+                    child: ColorFiltered(
+                      colorFilter: ColorFilter.mode(
+                        Colors.black.withOpacity(
+                          aqi >= 0 && aqi <= 50 ? 0.5 : 1.0,
+                        ), // Adjust opacity here
+                        BlendMode.srcOver,
+                      ),
+                      child: Image.asset(
+                        aqi >= 0 && aqi <= 50
+                            ? 'assets/images/goodaqi.jpg'
+                            : 'assets/images/badaqi.jpg',
+                      ),
+                    ),
+                  ),
                   Positioned(
                     bottom: 30,
                     left: 20,
                     child: Text(
-                      "Lolo",
+                      "Air Quality Index",
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 20,
@@ -185,14 +197,6 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ),
-                        Text(
-                          'o',
-                          style: TextStyle(
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                            foreground: Paint()..shader = linearGradient,
-                          ),
-                        )
                       ],
                     ),
                   ),
@@ -203,26 +207,60 @@ class _HomePageState extends State<HomePage> {
               height: 50,
             ),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              height:
+                  150, // Set a fixed height to limit the height of the ListView
+              child: ListView(
+                scrollDirection: Axis.horizontal,
                 children: [
                   weatherItem(
-                    text: 'Wind Speed',
-                    value: so2,
-                    unit: 'km/h',
-                    imageUrl: 'assets/images/image1.jpg',
+                    text: 'Carbon Monoxide',
+                    value: co,
+                    threshold: 2000,
+                    unit: 'ug/m^3',
+                    imageUrl: 'assets/images/CO.png',
                   ),
                   weatherItem(
-                      text: 'Humidity',
-                      value: no2,
-                      unit: '',
-                      imageUrl: 'assets/images/image2.jpg'),
+                    text: 'Nitrogen Dioxide',
+                    value: no2,
+                    threshold: 80,
+                    unit: 'ug/m^3',
+                    imageUrl: 'assets/images/no2.png',
+                  ),
                   weatherItem(
-                    text: 'Wind Speed',
-                    value: no,
-                    unit: 'C',
-                    imageUrl: 'assets/images/image3.jpg',
+                    text: 'Sulphur Dioxide',
+                    value: so2,
+                    threshold: 80,
+                    unit: 'ug/m^3',
+                    imageUrl: 'assets/images/so2.png',
+                  ),
+                  weatherItem(
+                    text: 'Ammonia',
+                    value: nh3,
+                    threshold: 400,
+                    unit: 'ug/m^3',
+                    imageUrl: 'assets/images/nh3.png',
+                  ),
+                  weatherItem(
+                    text: 'PM2_5',
+                    value: pm2_5,
+                    threshold: 60,
+                    unit: 'ug/m^3',
+                    imageUrl: 'assets/images/pm2_5.png',
+                  ),
+                  weatherItem(
+                    text: 'PM10',
+                    value: pm10,
+                    threshold: 100,
+                    unit: 'ug/m^3',
+                    imageUrl: 'assets/images/pm10.jpg',
+                  ),
+                  weatherItem(
+                    text: 'Ozone',
+                    value: o3,
+                    threshold: 100,
+                    unit: 'ug/m^3',
+                    imageUrl: 'assets/images/o3.png',
                   ),
                 ],
               ),
@@ -230,75 +268,6 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(
               height: 50,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Text(
-                  'Today',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
-                  ),
-                ),
-                Text(
-                  'Next 7 Days',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18,
-                      color: AppColors.primaryColor1),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Expanded(
-                child: ListView(
-              scrollDirection: Axis.horizontal,
-              // children: [Container(
-              //         padding: const EdgeInsets.symmetric(vertical: 20),
-              //         margin: const EdgeInsets.only(
-              //             right: 20, bottom: 10, top: 10),
-              //         width: 80,
-              //         decoration: BoxDecoration(
-              //             color: isparamSafe == true
-              //                 ? Colors.green.shade300
-              //                 : Colors.red.shade400,
-              //             borderRadius:
-              //                 const BorderRadius.all(Radius.circular(10)),
-              //             boxShadow: [
-              //               BoxShadow(
-              //                 offset: const Offset(0, 1),
-              //                 blurRadius: 5,
-              //                 color: isparamSafe == true
-              //                 ? Colors.green.shade300
-              //                 : Colors.red.shade400,
-              //               ),
-              //             ]),
-              //         child: Column(
-              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //           children: [
-              //             Text(
-              //             parameter,
-              //               style: TextStyle(
-              //                 fontSize: 17,
-              //                 color:
-              //                    Colors.white
-              //                   ,
-              //                 fontWeight: FontWeight.w500,
-              //               ),
-              //             ),
-              //             Image.asset(
-              //               imgaddress,
-              //               width: 30,
-              //             ),
-
-              //           ],
-              //         ),
-              //       )
-              // ],
-            ))
           ],
         ),
       ),
