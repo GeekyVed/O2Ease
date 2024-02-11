@@ -2,12 +2,8 @@ import 'package:o2ease/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:o2ease/firebase_options.dart';
 import 'package:o2ease/screens/auth_part/getstarted.dart';
-import 'package:o2ease/screens/auth_part/login.dart';
-import 'package:o2ease/screens/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:o2ease/screens/navbar.dart';
-import 'package:o2ease/screens/splashscreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

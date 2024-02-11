@@ -1,11 +1,8 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:o2ease/constants/colors.dart';
-import 'package:o2ease/screens/auth_part/getstarted.dart';
 import 'package:o2ease/screens/auth_part/login.dart';
-import 'package:o2ease/screens/auth_part/signup.dart';
 import 'package:o2ease/screens/home_page.dart';
-import 'package:page_transition/page_transition.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({Key? key}) : super(key: key);

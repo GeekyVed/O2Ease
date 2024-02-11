@@ -123,11 +123,21 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Latitude : $lat  Longitude: $lng",
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 30.0,
+            ShaderMask(
+              shaderCallback: (Rect bounds) {
+                return const LinearGradient(
+                  colors: AppColors.gradient, // Gradient colors
+                  begin: Alignment.centerLeft, // Gradient start point
+                  end: Alignment.centerRight, // Gradient end point
+                ).createShader(bounds);
+              },
+              child: Text(
+                "Latitude : $lat  Longitude: $lng",
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             const SizedBox(
