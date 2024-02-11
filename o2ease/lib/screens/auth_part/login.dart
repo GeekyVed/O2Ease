@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:o2ease/constants/colors.dart';
 import 'package:o2ease/screens/auth_part/signup.dart';
 import 'package:o2ease/screens/home_page.dart';
+import 'package:o2ease/screens/precautions.dart';
 import 'package:o2ease/widgets/button.dart';
 import 'package:o2ease/widgets/custom_input.dart';
 import 'package:flutter/cupertino.dart';
@@ -148,7 +149,7 @@ void save() async {
               const SizedBox(height: 20),
               CustomButton(
                 text: 'Log in',
-                onPressed: (){Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx) => HomePage()));},
+                onPressed: (){Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx) => Precautions()));},
                 width: width,
               ),
               const SizedBox(height: 20),

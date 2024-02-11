@@ -1,6 +1,7 @@
 import 'package:o2ease/constants/colors.dart';
 import 'package:o2ease/screens/auth_part/login.dart';
 import 'package:flutter/material.dart';
+import 'package:o2ease/screens/navbar.dart';
 
 class GetStartedScreen extends StatefulWidget {
   const GetStartedScreen({Key? key}) : super(key: key);
@@ -91,7 +92,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                         }
                       } else {
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => const LoginScreen()));
+                            MaterialPageRoute(builder: (_) => const RootPage()));
                       }
                     });
                   },
